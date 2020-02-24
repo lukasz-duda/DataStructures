@@ -27,18 +27,36 @@ CREATE TABLE Email
 (
     Id int IDENTITY PRIMARY KEY,
     SenderId smallint FOREIGN KEY REFERENCES Person(Id) NOT NULL,
-    Topic nvarchar(50) NOT NULL,
-    Body nvarchar(1000) NOT NULL
+    [Subject] nvarchar(50) NOT NULL,
+    Body nvarchar(1000) NOT NULL,
+    Footer nvarchar(200) NOT NULL
 )
 
-CREATE TABLE CC
+CREATE TABLE Recipient
 (
     EmailId int FOREIGN KEY REFERENCES Email(Id),
     PersonId smallint FOREIGN KEY REFERENCES Person(Id)
 )
 
-CREATE TABLE BCC
+CREATE TABLE CopyRecipient
 (
     EmailId int FOREIGN KEY REFERENCES Email(Id),
     PersonId smallint FOREIGN KEY REFERENCES Person(Id)
 )
+
+CREATE TABLE Attachment
+(
+    Id smallint PRIMARY KEY,
+    [FileName] nvarchar(255) NOT NULL,
+    Extension nvarchar(5) NOT NULL,
+    FilePath nvarchar(255) NOT NULL,
+    EmailId int FOREIGN KEY REFERENCES Email(Id)
+)
+   
+select
+    o.name AS [Table name],
+    sum(c.max_length) AS [Maximum row length]
+from sys.columns c
+join sys.objects o on o.object_id = c.object_id
+where o.type = 'u'
+group by o.name
