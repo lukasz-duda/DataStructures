@@ -29,7 +29,7 @@ CREATE TABLE Email
     SenderId smallint FOREIGN KEY REFERENCES Person(Id) NOT NULL,
     [Subject] nvarchar(50) NOT NULL,
     Body nvarchar(1000) NOT NULL,
-    Footer nvarchar(200) NOT NULL
+    Footer nvarchar(50) NOT NULL
 )
 
 CREATE TABLE Recipient
@@ -44,10 +44,10 @@ CREATE TABLE CopyRecipient
     PersonId smallint FOREIGN KEY REFERENCES Person(Id)
 )
 
-CREATE TABLE Attachment6
+CREATE TABLE Attachment
 (
     Id int PRIMARY KEY,
-    [FileName] nvarchar(255) NOT NULL,
+    [FileName] nvarchar(50) NOT NULL,
     Extension nvarchar(5) NOT NULL,
     FilePath nvarchar(255) NOT NULL,
     EmailId bigint FOREIGN KEY REFERENCES Email(Id)
